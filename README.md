@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/homik-ori/vibration/releases/latest/download/vibration.ipa"><img src="https://img.shields.io/badge/Download-.ipa-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Download IPA"></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/homik-ori/vibration/releases/latest"><img src="https://img.shields.io/github/v/release/homik-ori/vibration?style=flat-square&color=7c5cff" alt="Release"></a>
   <a href="https://github.com/homik-ori/vibration/actions/workflows/build_ipa.yml"><img src="https://github.com/homik-ori/vibration/actions/workflows/build_ipa.yml/badge.svg" alt="Build"></a>
   <img src="https://img.shields.io/badge/iOS-15.0%2B-black?style=flat-square" alt="iOS 15.0+">
@@ -25,7 +29,7 @@
 
 ## Возможности
 
-| | |
+| Раздел | Что делает |
 |---|---|
 | 🎧 **Музыка** | Импорт `.mp3`, `.wav`, `.m4a`, `.flac`, `.aiff` через системный `fileImporter`; файл копируется в приватную папку приложения. |
 | 🎛 **Плеер** | Обложка с анимированным градиентом, пульсирующим в такт басам, таймлайн с текущим/общим временем, play/pause, перемотка ±15 с. |
@@ -108,6 +112,14 @@ vibration/
 с позицией камеры. Во фронтальном режиме `ARFaceAnchor.transform` даёт z-координату лица относительно
 камеры. Оба значения сглаживаются EMA (0.7/0.3) и опрашиваются 20 раз в секунду, а не на каждом кадре —
 это бережёт главный поток.
+
+## Ограничения
+
+- Сборка **неподписанная**: без переподписи (AltStore / SideStore / Sideloadly) iOS её не установит.
+- ARKit-вкладка работает только на реальном устройстве — в симуляторе камеры и датчиков глубины нет.
+- Воспроизведение намеренно останавливается при уходе с вкладки «Музыка»: приложение не держит
+  `AVAudioEngine` и `ARSession` активными в фоне, чтобы не греть телефон и не сажать батарею.
+- FLAC читается системным декодером iOS; экзотические контейнеры могут не открыться.
 
 ## Лицензия
 
