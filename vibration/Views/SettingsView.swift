@@ -61,7 +61,7 @@ struct SettingsView: View {
 
             SettingSliderCard(
                 title: "Чувствительность к басу",
-                caption: "Ниже порог — больше срабатываний",
+                caption: "Правее — чаще срабатывания",
                 systemImage: "slider.horizontal.3",
                 valueText: settings.sensitivityPercentText,
                 value: $settings.bassSensitivity,
