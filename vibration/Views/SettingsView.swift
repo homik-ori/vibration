@@ -6,7 +6,7 @@ struct SettingsView: View {
     @ObservedObject private var settings = AppSettings.shared
 
     private var appVersion: String {
-        (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0.0"
+        AppInfo.bundleVersion
     }
 
     var body: some View {
@@ -137,7 +137,7 @@ struct SettingsView: View {
                         Text("vibration")
                             .font(.system(size: 21, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
-                        Text("Версия \(appVersion)")
+                        Text("Версия \(appVersion) (\(AppInfo.bundleBuild))")
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.45))
                     }
@@ -158,6 +158,75 @@ struct SettingsView: View {
                         .font(.system(size: 19, weight: .heavy, design: .rounded))
                         .foregroundStyle(Theme.accentGradient)
                 }
+
+                Link(destination: AppInfo.repositoryURL) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "chevron.left.forwardslash.chevron.right")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.80))
+
+                        Text("Исходный код")
+                            .font(.footnote.weight(.semibold))
+                            .foregroundColor(.white.opacity(0.92))
+
+                        Spacer(minLength: 8)
+
+                        Text(AppInfo.repositoryDisplay)
+                            .font(.caption2)
+                            .foregroundColor(.white.opacity(0.42))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(Theme.cyan.opacity(0.9))
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(Color.white.opacity(0.06))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.8)
+                    )
+                }
+                .buttonStyle(PressableButtonStyle(scale: 0.98))
+
+                Link(destination: AppInfo.releasesURL) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "arrow.down.circle")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.80))
+
+                        Text("Скачать vibration.ipa")
+                            .font(.footnote.weight(.semibold))
+                            .foregroundColor(.white.opacity(0.92))
+
+                        Spacer(minLength: 8)
+
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(Theme.cyan.opacity(0.9))
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(Color.white.opacity(0.06))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.8)
+                    )
+                }
+                .buttonStyle(PressableButtonStyle(scale: 0.98))
+
+                Text("Лицензия MIT • сборка без подписи, установка через AltStore / SideStore / Sideloadly")
+                    .font(.caption2)
+                    .foregroundColor(.white.opacity(0.32))
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text("Нативное iOS-приложение: FFT-анализ баса через Accelerate, тактильная отдача Core Haptics, 3D-сканер глубины на ARKit и тактильный парктроник.")
                     .font(.caption2)
