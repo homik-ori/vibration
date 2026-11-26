@@ -1,0 +1,11 @@
+.DS_Store
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.xcodeproj
+xcuserdata/
+*.xcworkspace
+!*.xcodeproj/project.pbxproj
+.env
+__pycache__/
