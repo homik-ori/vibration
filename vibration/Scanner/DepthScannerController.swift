@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import UIKit
 import ARKit
 import SceneKit
@@ -122,11 +123,11 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
         NotificationCenter.default.removeObserver(self)
     }
 
-    @objc private func handleDidEnterBackground() {
+    @objc private func handleDidEnterBackground(_ notification: Notification) {
         stopSession()
     }
 
-    @objc private func handleWillEnterForeground() {
+    @objc private func handleWillEnterForeground(_ notification: Notification) {
         if wantsToRun {
             activate()
         }
