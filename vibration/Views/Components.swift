@@ -6,24 +6,24 @@ struct AppBackground: View {
         ZStack {
             LinearGradient(
                 colors: [
-                    Color(red: 0.09, green: 0.07, blue: 0.15),
-                    Color(red: 0.03, green: 0.02, blue: 0.05),
-                    Color(red: 0.02, green: 0.02, blue: 0.04)
+                    Color(red: 0.165, green: 0.110, blue: 0.118),
+                    Color(red: 0.098, green: 0.090, blue: 0.086),
+                    Color(red: 0.055, green: 0.050, blue: 0.046)
                 ],
                 startPoint: .top,
                 endPoint: .bottom
             )
 
             Circle()
-                .fill(Theme.violet.opacity(0.34))
+                .fill(Theme.wine.opacity(0.42))
                 .frame(width: 430, height: 430)
-                .blur(radius: 130)
+                .blur(radius: 140)
                 .offset(x: -150, y: -300)
 
             Circle()
-                .fill(Theme.pink.opacity(0.20))
+                .fill(Theme.gold.opacity(0.12))
                 .frame(width: 360, height: 360)
-                .blur(radius: 130)
+                .blur(radius: 140)
                 .offset(x: 170, y: 330)
         }
         .ignoresSafeArea()
@@ -108,7 +108,7 @@ struct CapabilityRow: View {
     var body: some View {
         HStack(spacing: 10) {
             Circle()
-                .fill(isAvailable ? Color.green.opacity(0.85) : Color.white.opacity(0.18))
+                .fill(isAvailable ? Theme.gold : Color.white.opacity(0.18))
                 .frame(width: 7, height: 7)
             Text(title)
                 .font(.footnote)
@@ -116,7 +116,7 @@ struct CapabilityRow: View {
             Spacer()
             Text(isAvailable ? "есть" : "нет")
                 .font(.caption2.weight(.semibold))
-                .foregroundColor(isAvailable ? Color.green.opacity(0.85) : .white.opacity(0.35))
+                .foregroundColor(isAvailable ? Theme.gold : .white.opacity(0.35))
         }
     }
 }

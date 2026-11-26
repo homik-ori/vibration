@@ -24,15 +24,20 @@ final class HapticsManager {
     private var lastPulseTime: CFTimeInterval = 0
     private let cooldown: CFTimeInterval = 0.08
 
+    private var lastClickTime: CFTimeInterval = 0
+    private let clickCooldown: CFTimeInterval = 0.045
+
     private let mediumImpact = UIImpactFeedbackGenerator(style: .medium)
     private let lightImpact = UIImpactFeedbackGenerator(style: .light)
     private let softImpact = UIImpactFeedbackGenerator(style: .soft)
+    private let rigidImpact = UIImpactFeedbackGenerator(style: .rigid)
 
     private init() {
         supportsHaptics = CHHapticEngine.capabilitiesForHardware().supportsHaptics
         mediumImpact.prepare()
         lightImpact.prepare()
         softImpact.prepare()
+        rigidImpact.prepare()
     }
 
     // MARK: - Lifecycle
@@ -104,8 +109,53 @@ final class HapticsManager {
         }
     }
 
-    // MARK: - Settings test pattern
+    /// Crisp "click" for the tap pad: a sharp transient with a fast repeat rate.
+    func click(intensity: Double) {
+        let level = max(0.12, min(1.0, intensity))
 
+        guard supportsHaptics else {
+            DispatchQueue.main.async {
+                self.rigidImpact.impactOccurred(intensity: CGFloat(level))
+                self.rigidImpact.prepare()
+            }
+            return
+        }
+
+        engineQueue.async { [weak self] in
+            guard let self = self else { return }
+            let now = CACurrentMediaTime()
+            guard now - self.lastClickTime >= self.clickCooldown else { return }
+            self.lastClickTime = now
+
+            guard self.engineReady, let player = self.transientPlayer else {
+                self.startEngineLocked()
+                return
+            }
+
+            do {
+                let parameters = [
+                    CHHapticDynamicParameter(
+                        parameterID: .hapticIntensityControl,
+                        value: Float(level),
+                        relativeTime: 0
+                    ),
+                    CHHapticDynamicParameter(
+                        parameterID: .hapticSharpnessControl,
+                        value: 0.95,
+                        relativeTime: 0
+                    )
+                ]
+                try player.sendParameters(parameters, atTime: 0)
+                try player.start(atTime: CHHapticTimeImmediate)
+            } catch {
+                self.engineReady = false
+                self.transientPlayer = nil
+                self.startEngineLocked()
+            }
+        }
+    }
+
+    // MARK: - Settings test pattern
     func test(strength: Double, sharpness: Double) {
         let level = Float(max(0.1, min(1.0, strength)))
         let crisp = Float(max(0.0, min(1.0, sharpness)))

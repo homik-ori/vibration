@@ -23,12 +23,19 @@ struct RootView: View {
                 }
                 .tag(1)
 
+            TapPadView()
+                .background(AppBackground())
+                .tabItem {
+                    Label("Тап", systemImage: "hand.tap.fill")
+                }
+                .tag(2)
+
             SettingsView()
                 .background(AppBackground())
                 .tabItem {
                     Label("Настройки", systemImage: "slider.horizontal.3")
                 }
-                .tag(2)
+                .tag(3)
         }
         .onChange(of: selection) { newValue in
             if newValue != 0 {
@@ -45,7 +52,7 @@ struct RootView: View {
             }
         }
         .preferredColorScheme(.dark)
-        .tint(Theme.violet)
+        .tint(Theme.gold)
     }
 }
 

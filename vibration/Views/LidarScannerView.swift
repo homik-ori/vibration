@@ -98,7 +98,7 @@ struct LidarScannerView: View {
             VStack {
                 HStack(spacing: 6) {
                     Circle()
-                        .fill(scanner.distance == nil ? Color.orange : Color.green)
+                        .fill(scanner.distance == nil ? Theme.gold.opacity(0.25) : Theme.gold)
                         .frame(width: 6, height: 6)
                     Text(scanner.mode.sensorName)
                         .font(.system(size: 10, weight: .semibold))
@@ -113,7 +113,7 @@ struct LidarScannerView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 7)
                 .background(.ultraThinMaterial, in: Capsule())
-                .overlay(Capsule().strokeBorder(Color.white.opacity(0.12), lineWidth: 0.8))
+                .overlay(Capsule().strokeBorder(Theme.gold.opacity(0.16), lineWidth: 0.8))
                 .padding(.top, 14)
 
                 Spacer()
@@ -125,12 +125,12 @@ struct LidarScannerView: View {
                         .foregroundColor(.white)
                     Text(scanner.distanceDetail)
                         .font(.caption2.monospacedDigit())
-                        .foregroundColor(.white.opacity(0.55))
+                        .foregroundColor(Theme.gold.opacity(0.85))
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .background(.ultraThinMaterial, in: Capsule())
-                .overlay(Capsule().strokeBorder(Color.white.opacity(0.14), lineWidth: 0.8))
+                .overlay(Capsule().strokeBorder(Theme.gold.opacity(0.22), lineWidth: 0.8))
                 .padding(.bottom, 16)
             }
 
@@ -141,7 +141,7 @@ struct LidarScannerView: View {
         .aspectRatio(0.78, contentMode: .fit)
         .overlay(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
+                .strokeBorder(Theme.gold.opacity(0.14), lineWidth: 1)
         )
     }
 
@@ -203,7 +203,7 @@ struct LidarScannerView: View {
                         }
                     }
                 }
-                .tint(Theme.violet)
+                .tint(Theme.gold)
                 .onChange(of: settings.proximityHaptics) { newValue in
                     if newValue { HapticsManager.shared.tick(intensity: 0.5) }
                 }
@@ -226,7 +226,7 @@ struct LidarScannerView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "dot.radiowaves.left.and.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Theme.cyan)
+                        .foregroundColor(Theme.gold)
                     Text("Датчики устройства")
                         .font(.caption.weight(.semibold))
                         .foregroundColor(.white.opacity(0.75))
@@ -285,37 +285,37 @@ struct ScannerReticle: View {
 
             ZStack {
                 CornerBracket()
-                    .stroke(Color.white.opacity(0.55), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .stroke(Theme.gold.opacity(0.60), style: StrokeStyle(lineWidth: 2, lineCap: .round))
                     .frame(width: bracketLength, height: bracketLength)
                     .position(x: bracketInset + bracketLength / 2, y: bracketInset + bracketLength / 2)
 
                 CornerBracket()
-                    .stroke(Color.white.opacity(0.55), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .stroke(Theme.gold.opacity(0.60), style: StrokeStyle(lineWidth: 2, lineCap: .round))
                     .frame(width: bracketLength, height: bracketLength)
                     .rotationEffect(.degrees(90))
                     .position(x: geometry.size.width - bracketInset - bracketLength / 2, y: bracketInset + bracketLength / 2)
 
                 CornerBracket()
-                    .stroke(Color.white.opacity(0.55), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .stroke(Theme.gold.opacity(0.60), style: StrokeStyle(lineWidth: 2, lineCap: .round))
                     .frame(width: bracketLength, height: bracketLength)
                     .rotationEffect(.degrees(-90))
                     .position(x: bracketInset + bracketLength / 2, y: geometry.size.height - bracketInset - bracketLength / 2)
 
                 CornerBracket()
-                    .stroke(Color.white.opacity(0.55), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                    .stroke(Theme.gold.opacity(0.60), style: StrokeStyle(lineWidth: 2, lineCap: .round))
                     .frame(width: bracketLength, height: bracketLength)
                     .rotationEffect(.degrees(180))
                     .position(x: geometry.size.width - bracketInset - bracketLength / 2, y: geometry.size.height - bracketInset - bracketLength / 2)
 
                 if mode == .rear {
                     Crosshair()
-                        .stroke(Color.white.opacity(tracking ? 0.85 : 0.45), style: StrokeStyle(lineWidth: 1.4, lineCap: .round))
+                        .stroke(Theme.gold.opacity(tracking ? 0.90 : 0.45), style: StrokeStyle(lineWidth: 1.4, lineCap: .round))
                         .frame(width: size * 0.16, height: size * 0.16)
                         .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                 } else {
                     Ellipse()
                         .strokeBorder(
-                            Theme.coolGradient,
+                            Theme.reticleGradient,
                             style: StrokeStyle(lineWidth: 2, dash: [9, 7])
                         )
                         .frame(width: size * 0.34, height: size * 0.42)

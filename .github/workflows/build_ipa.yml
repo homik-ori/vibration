@@ -115,8 +115,9 @@ jobs:
           {
             echo "## vibration ${VERSION}"
             echo
-            echo "Нативное iOS-приложение: вибрация в такт басам (Accelerate FFT + Core Haptics),"
-            echo "3D-сканер глубины (LiDAR / TrueDepth) и тактильный парктроник."
+            echo "Нативное iOS-приложение в палитре вино/золото/графит: вибрация в такт басам"
+            echo "(Accelerate FFT + Core Haptics), 3D-сканер глубины (LiDAR / TrueDepth),"
+            echo "тактильный парктроник и вкладка «Тап» с щелчками на каждое касание."
             echo
             echo "Неподписанная сборка (\`CODE_SIGNING_ALLOWED=NO\`) — устанавливается через AltStore / SideStore / Sideloadly."
             echo

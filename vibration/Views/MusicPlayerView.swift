@@ -105,7 +105,8 @@ struct MusicPlayerView: View {
                     .foregroundColor(.white)
                     .frame(width: 42, height: 42)
                     .background(Circle().fill(Theme.accentGradient))
-                    .shadow(color: Theme.violet.opacity(0.5), radius: 12, y: 5)
+                    .overlay(Circle().strokeBorder(Theme.gold.opacity(0.35), lineWidth: 1))
+                    .shadow(color: Theme.gold.opacity(0.28), radius: 12, y: 5)
             }
             .buttonStyle(PressableButtonStyle())
         }
@@ -158,7 +159,7 @@ struct MusicPlayerView: View {
                     }
                 }
             )
-            .tint(Theme.violet)
+            .tint(Theme.gold)
             .disabled(player.duration <= 0)
 
             HStack {
@@ -193,13 +194,13 @@ struct MusicPlayerView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(Theme.accentGradient)
+                        .fill(Theme.goldGradient)
                         .frame(width: 78, height: 78)
-                        .shadow(color: Theme.violet.opacity(0.55), radius: 22, y: 8)
+                        .shadow(color: Theme.gold.opacity(0.35), radius: 22, y: 8)
 
                     Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
                         .font(.system(size: 30, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Theme.ink)
                         .offset(x: player.isPlaying ? 0 : 2)
                 }
             }

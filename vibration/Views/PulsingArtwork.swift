@@ -29,9 +29,9 @@ struct PulsingArtwork: View {
                     .fill(
                         LinearGradient(
                             colors: [
-                                Color(red: 0.10, green: 0.07, blue: 0.22),
-                                Color(red: 0.20, green: 0.09, blue: 0.30),
-                                Color(red: 0.06, green: 0.05, blue: 0.12)
+                                Color(red: 0.22, green: 0.10, blue: 0.13),
+                                Color(red: 0.30, green: 0.12, blue: 0.17),
+                                Color(red: 0.09, green: 0.08, blue: 0.07)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -40,7 +40,7 @@ struct PulsingArtwork: View {
 
                 // Ambient blobs driven by the low-frequency envelope.
                 Circle()
-                    .fill(Theme.violet.opacity(0.55))
+                    .fill(Theme.wine.opacity(0.55))
                     .frame(width: side * 0.72, height: side * 0.72)
                     .blur(radius: side * 0.11)
                     .offset(
@@ -50,7 +50,7 @@ struct PulsingArtwork: View {
                     .scaleEffect(1 + normalizedLevel * 0.22)
 
                 Circle()
-                    .fill(Theme.pink.opacity(0.42))
+                    .fill(Theme.gold.opacity(0.42))
                     .frame(width: side * 0.62, height: side * 0.62)
                     .blur(radius: side * 0.12)
                     .offset(
@@ -61,7 +61,7 @@ struct PulsingArtwork: View {
 
                 // Beat ring burst.
                 Circle()
-                    .stroke(Theme.accentGradient, lineWidth: max(1.5, side * 0.006))
+                    .stroke(Theme.goldGradient, lineWidth: max(1.5, side * 0.006))
                     .frame(width: side * 0.46, height: side * 0.46)
                     .scaleEffect(1 + burst * 0.55)
                     .opacity(Double(1 - burst) * 0.85)
@@ -77,7 +77,7 @@ struct PulsingArtwork: View {
                             )
                         )
                         .scaleEffect(1 + normalizedLevel * 0.10)
-                        .shadow(color: Theme.violet.opacity(0.55), radius: 18)
+                        .shadow(color: Theme.wine.opacity(0.55), radius: 18)
 
                     Text(title.isEmpty ? "vibration" : title)
                         .font(.system(size: side * 0.048, weight: .semibold, design: .rounded))
@@ -99,7 +99,7 @@ struct PulsingArtwork: View {
                 RoundedRectangle(cornerRadius: side * 0.10, style: .continuous)
                     .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
             )
-            .shadow(color: Theme.violet.opacity(0.35), radius: 30, x: 0, y: 18)
+            .shadow(color: Theme.wine.opacity(0.35), radius: 30, x: 0, y: 18)
             .animation(.easeOut(duration: 0.16), value: normalizedLevel)
         }
         .aspectRatio(1, contentMode: .fit)
@@ -128,7 +128,7 @@ struct BassBars: View {
                     Capsule()
                         .fill(
                             LinearGradient(
-                                colors: [Theme.cyan.opacity(0.9), Theme.violet.opacity(0.9)],
+                                colors: [Theme.gold.opacity(0.9), Theme.wine.opacity(0.9)],
                                 startPoint: .bottom,
                                 endPoint: .top
                             )

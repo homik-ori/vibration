@@ -19,12 +19,12 @@ struct VibrationApp: App {
         let tabAppearance = UITabBarAppearance()
         tabAppearance.configureWithTransparentBackground()
         tabAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
-        tabAppearance.backgroundColor = UIColor(white: 0.02, alpha: 0.30)
-        tabAppearance.shadowColor = UIColor(white: 1.0, alpha: 0.06)
+        tabAppearance.backgroundColor = UIColor(red: 0.098, green: 0.090, blue: 0.086, alpha: 0.42)
+        tabAppearance.shadowColor = UIColor(red: 0.761, green: 0.659, blue: 0.471, alpha: 0.16)
 
         let itemAppearance = UITabBarItemAppearance()
-        let idle = UIColor(white: 0.62, alpha: 1.0)
-        let active = UIColor(red: 0.70, green: 0.56, blue: 1.00, alpha: 1.0)
+        let idle = UIColor(red: 0.72, green: 0.67, blue: 0.59, alpha: 1.0)
+        let active = UIColor(red: 0.761, green: 0.659, blue: 0.471, alpha: 1.0)
 
         itemAppearance.normal.iconColor = idle
         itemAppearance.normal.titleTextAttributes = [.foregroundColor: idle]

@@ -220,8 +220,6 @@ final class MusicPlayerEngine: ObservableObject {
         isEngineRunning = false
         bassLevel = 0
 
-        HapticsManager.shared.stop()
-
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
         } catch {

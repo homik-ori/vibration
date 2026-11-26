@@ -87,7 +87,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .tint(Theme.violet)
+                .tint(Theme.gold)
             }
         }
     }
@@ -104,14 +104,14 @@ struct SettingsView: View {
                 Text("Протестировать Taptic Engine")
                     .font(.subheadline.weight(.semibold))
             }
-            .foregroundColor(.white)
+            .foregroundColor(Theme.ink)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Theme.accentGradient)
+                    .fill(Theme.goldGradient)
             )
-            .shadow(color: Theme.violet.opacity(0.45), radius: 18, y: 8)
+            .shadow(color: Theme.gold.opacity(0.30), radius: 18, y: 8)
         }
         .buttonStyle(PressableButtonStyle(scale: 0.97))
     }
@@ -129,9 +129,9 @@ struct SettingsView: View {
 
                         Image(systemName: "waveform")
                             .font(.system(size: 22, weight: .semibold))
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.gold)
                     }
-                    .shadow(color: Theme.violet.opacity(0.45), radius: 14, y: 5)
+                    .shadow(color: Theme.wine.opacity(0.55), radius: 14, y: 5)
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text("vibration")
@@ -156,7 +156,7 @@ struct SettingsView: View {
                     Spacer()
                     Text("by homik")
                         .font(.system(size: 19, weight: .heavy, design: .rounded))
-                        .foregroundStyle(Theme.accentGradient)
+                        .foregroundStyle(Theme.goldGradient)
                 }
 
                 Link(destination: AppInfo.repositoryURL) {
@@ -179,7 +179,7 @@ struct SettingsView: View {
 
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(Theme.cyan.opacity(0.9))
+                            .foregroundColor(Theme.gold.opacity(0.9))
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 12)
@@ -208,7 +208,7 @@ struct SettingsView: View {
 
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(Theme.cyan.opacity(0.9))
+                            .foregroundColor(Theme.gold.opacity(0.9))
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 12)
@@ -244,7 +244,7 @@ struct SettingsView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "cpu")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Theme.cyan)
+                        .foregroundColor(Theme.gold)
                     Text("Оборудование")
                         .font(.caption.weight(.semibold))
                         .foregroundColor(.white.opacity(0.75))
@@ -301,7 +301,7 @@ struct SettingSliderCard: View {
                 }
 
                 Slider(value: $value, in: range)
-                    .tint(Theme.violet)
+                    .tint(Theme.gold)
             }
         }
     }

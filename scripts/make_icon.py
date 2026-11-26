@@ -14,18 +14,18 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 y, x = np.mgrid[0:S, 0:S].astype(np.float32)
 cx, cy = S * 0.5, S * 0.46
 
-top = np.array([20, 16, 38], dtype=np.float32)
-bottom = np.array([4, 4, 9], dtype=np.float32)
+top = np.array([119, 51, 68], dtype=np.float32)
+bottom = np.array([25, 23, 22], dtype=np.float32)
 t = (y / S)[..., None]
 base = top[None, None, :] * (1.0 - t) + bottom[None, None, :] * t
 
 r = np.sqrt((x - cx) ** 2 + (y - cy) ** 2) / (S * 0.72)
 glow = np.clip(1.0 - r, 0.0, 1.0) ** 2
-base += np.array([96, 62, 235], dtype=np.float32)[None, None, :] * glow[..., None] * 0.62
+base += np.array([98, 40, 54], dtype=np.float32)[None, None, :] * glow[..., None] * 0.55
 
 r2 = np.sqrt((x - S * 0.82) ** 2 + (y - S * 0.92) ** 2) / (S * 0.55)
 g2 = np.clip(1.0 - r2, 0.0, 1.0) ** 2
-base += np.array([240, 64, 148], dtype=np.float32)[None, None, :] * g2[..., None] * 0.22
+base += np.array([194, 168, 120], dtype=np.float32)[None, None, :] * g2[..., None] * 0.18
 
 base = np.clip(base, 0, 255)
 img = Image.fromarray(base.astype(np.uint8), mode="RGB").convert("RGBA")
@@ -37,14 +37,14 @@ draw = ImageDraw.Draw(layer)
 core_r = S * 0.052
 draw.ellipse(
     [cx - core_r, cy - core_r, cx + core_r, cy + core_r],
-    fill=(255, 255, 255, 255),
+    fill=(244, 233, 210, 255),
 )
 
 arc_specs = [
-    (0.135, 8.0, (206, 178, 255)),
-    (0.205, 6.6, (176, 140, 255)),
-    (0.280, 5.4, (232, 120, 210)),
-    (0.360, 4.2, (255, 110, 168)),
+    (0.135, 8.0, (236, 219, 188)),
+    (0.205, 6.6, (194, 168, 120)),
+    (0.280, 5.4, (168, 140, 95)),
+    (0.360, 4.2, (194, 168, 120)),
 ]
 
 for radius_f, width_f, color in arc_specs:
