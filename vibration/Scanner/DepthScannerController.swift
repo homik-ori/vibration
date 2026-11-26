@@ -79,6 +79,9 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
 
     private var lastTickTime: CFTimeInterval = 0
     private var isRequestingPermission = false
+    /// True while the Lidar tab is on screen; lets a late `attach` still start
+    /// the session if SwiftUI built the view after `onAppear`.
+    private var wantsToRun = false
 
     override init() {
         super.init()
@@ -100,19 +103,51 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
             mode = first
         }
         sensorsDescription = sensors.isEmpty ? "не обнаружены" : sensors.joined(separator: " + ")
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func handleDidEnterBackground() {
+        stopSession()
+    }
+
+    @objc private func handleWillEnterForeground() {
+        if wantsToRun {
+            activate()
+        }
     }
 
     // MARK: - Lifecycle
 
     func attach(_ view: ARSCNView) {
-        if sceneView === view { return }
+        if sceneView === view {
+            if wantsToRun, !isRunning { startSession() }
+            return
+        }
         sceneView = view
         view.delegate = self
         view.automaticallyUpdatesLighting = false
+        if wantsToRun, !isRunning { startSession() }
     }
 
     /// Called by the view's `onAppear`.
     func activate() {
+        wantsToRun = true
         guard !availableModes.isEmpty else { return }
 
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -145,6 +180,7 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
 
     /// Called when the tab is left — ARKit must be paused to save power.
     func deactivate() {
+        wantsToRun = false
         stopSession()
     }
 
@@ -187,9 +223,11 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
             if ARWorldTrackingConfiguration.supportsFrameSemantics(.sceneDepth) {
                 configuration.frameSemantics.insert(.sceneDepth)
             }
-            view.debugOptions = ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh)
-                ? [.showSceneUnderstanding]
-                : []
+            if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
+                view.debugOptions = [ARSCNDebugOptions.showSceneUnderstanding]
+            } else {
+                view.debugOptions = []
+            }
             view.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         }
 

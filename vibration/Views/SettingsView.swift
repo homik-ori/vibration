@@ -62,7 +62,7 @@ struct SettingsView: View {
             SettingSliderCard(
                 title: "Чувствительность к басу",
                 caption: "Ниже порог — больше срабатываний",
-                systemImage: "dial.medium.fill",
+                systemImage: "slider.horizontal.3",
                 valueText: settings.sensitivityPercentText,
                 value: $settings.bassSensitivity,
                 range: 0...1
