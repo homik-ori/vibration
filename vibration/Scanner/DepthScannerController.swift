@@ -224,7 +224,8 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
                 configuration.frameSemantics.insert(.sceneDepth)
             }
             if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
-                view.debugOptions = [ARSCNDebugOptions.showSceneUnderstanding]
+                // Point-cloud feedback while the scene mesh is being built.
+                view.debugOptions = [.showFeaturePoints]
             } else {
                 view.debugOptions = []
             }
