@@ -341,7 +341,19 @@ final class DepthScannerController: NSObject, ObservableObject, ARSCNViewDelegat
 
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let faceAnchor = anchor as? ARFaceAnchor else { return }
-        let depth = Double(abs(faceAnchor.transform.columns.3.z))
+        guard faceAnchor.isTracked else { return }
+        guard let frame = sceneView?.session.currentFrame else { return }
+
+        // ARKit places the face in world space, so measure the euclidean
+        // distance to the *current* camera, not the world origin: the phone
+        // itself moves while the user scans.
+        let camera = frame.camera.transform.columns.3
+        let face = faceAnchor.transform.columns.3
+        let dx = Double(face.x - camera.x)
+        let dy = Double(face.y - camera.y)
+        let dz = Double(face.z - camera.z)
+        let depth = (dx * dx + dy * dy + dz * dz).squareRoot()
+
         if depth > 0.02, depth < 2.0 {
             latestFaceDistance = depth
             latestFaceTime = CACurrentMediaTime()
